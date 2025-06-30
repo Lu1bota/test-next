@@ -1,5 +1,12 @@
-const Profile = () => {
-  return <div>Profile</div>
-}
+import Link from "next/link";
 
-export default Profile
+const Profile = () => {
+  return (
+    <div>
+      <h2>Profile</h2>
+      <Link href={`/profile/edit`}>Edit profile</Link>
+    </div>
+  );
+};
+
+export default Profile;
