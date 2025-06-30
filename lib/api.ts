@@ -1,42 +1,57 @@
-import axios from 'axios'
+import axios from "axios";
 
-axios.defaults.baseURL = 'https://next-docs-api.onrender.com'
+axios.defaults.baseURL = "https://next-docs-api.onrender.com";
 
 export type NoteType = {
-  id: string
-  title: string
-  content: string
-  categoryId: string
-  createdAt: string
-  updatedAt: string
-}
+  id: string;
+  title: string;
+  content: string;
+  categoryId: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type NoteListType = {
-  notes: NoteType[]
-  total: number
-}
+  notes: NoteType[];
+  total: number;
+};
 
 export type CategoryType = {
-  id: string
-  name: string
-  description: string
-  createdAt: string
-  updatedAt: string
-}
+  id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type NewNoteData = {
+  title: string;
+  content: string;
+  categoryId: string;
+};
 
 export const getNotes = async (categoryId?: string, title?: string) => {
-  const { data } = await axios<NoteListType>('/notes', {
+  const { data } = await axios<NoteListType>("/notes", {
     params: { categoryId, title },
-  })
-  return data
-}
+  });
+  return data;
+};
 
 export const getSingleNote = async (id: string) => {
-  const { data } = await axios<NoteType>(`/notes/${id}`)
-  return data
-}
+  const { data } = await axios<NoteType>(`/notes/${id}`);
+  return data;
+};
 
 export const getCategories = async () => {
-  const { data } = await axios<CategoryType[]>(`/categories`)
-  return data
-}
+  const { data } = await axios<CategoryType[]>(`/categories`);
+  return data;
+};
+
+export const createNote = async (data: NewNoteData) => {
+  try {
+    const res = await axios.post<NoteType>("/notes", data);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
