@@ -3,45 +3,71 @@
 import { useRouter } from "next/navigation";
 import { CategoryType, createNote, NewNoteData } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
+import { useNoteDraftStore } from "@/lib/store/noteStore";
 
 type Props = {
   categories: CategoryType[];
 };
 
 const NoteForm = ({ categories }: Props) => {
+  const router = useRouter();
+
+  const { draft, setDraft, clearDraft } = useNoteDraftStore();
+
+  function handleChange(
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) {
+    setDraft({
+      ...draft,
+      [event.target.name]: event.target.value,
+    });
+  }
+
   const { mutate } = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
+      clearDraft();
       router.push("/notes/filter/all");
     },
-    onError: (error: Error) => {
-      alert(error.message);
-    },
   });
-  const router = useRouter();
-
-  const handleCancel = () => router.push("/notes/filter/all");
 
   const handleSubmit = (formData: FormData) => {
     const values = Object.fromEntries(formData) as NewNoteData;
     mutate(values);
   };
 
+  const handleCancel = () => router.push("/notes/filter/all");
+
   return (
     <form action={handleSubmit}>
       <label>
         Title
-        <input type="text" name="title" />
+        <input
+          type="text"
+          name="title"
+          defaultValue={draft.title}
+          onChange={handleChange}
+        />
       </label>
 
       <label>
         Content
-        <textarea name="content"></textarea>
+        <textarea
+          name="content"
+          defaultValue={draft.content}
+          onChange={handleChange}
+        ></textarea>
       </label>
 
       <label>
         Category
-        <select name="category">
+        <select
+          name="categoryId"
+          defaultValue={draft.categoryId}
+          onChange={handleChange}
+        >
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
