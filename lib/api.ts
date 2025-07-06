@@ -55,6 +55,10 @@ export type LoginRequest = {
   password: string;
 };
 
+type CheckSessionRequest = {
+  success: boolean;
+};
+
 export const getNotes = async (categoryId?: string, title?: string) => {
   const { data } = await nextServer.get<NoteListType>("/notes", {
     params: { categoryId, title },
@@ -63,12 +67,12 @@ export const getNotes = async (categoryId?: string, title?: string) => {
 };
 
 export const getSingleNote = async (id: string) => {
-  const { data } = await nextServer<NoteType>(`/notes/${id}`);
+  const { data } = await nextServer.get<NoteType>(`/notes/${id}`);
   return data;
 };
 
 export const getCategories = async () => {
-  const { data } = await nextServer<CategoryType[]>(`/categories`);
+  const { data } = await nextServer.get<CategoryType[]>(`/categories`);
   return data;
 };
 
@@ -89,4 +93,18 @@ export const register = async (data: RegisterRequest) => {
 export const login = async (data: LoginRequest) => {
   const res = await nextServer.post<User>("/auth/login", data);
   return res.data;
+};
+
+export const checkSession = async () => {
+  const res = await nextServer.get<CheckSessionRequest>("/auth/session");
+  return res.data.success;
+};
+
+export const getMe = async () => {
+  const { data } = await nextServer.get<User>("/auth/me");
+  return data;
+};
+
+export const logout = async (): Promise<void> => {
+  await nextServer.post("/auth/logout");
 };
