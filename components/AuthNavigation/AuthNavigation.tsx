@@ -23,6 +23,7 @@ const AuthNavigation = () => {
   // інакше - посилання на логін та реєстрацію
   return isAuthenticated ? (
     <li>
+      <p>{user?.userName}</p>
       <p>{user?.email}</p>
       <button onClick={handleLogout}>Logout</button>
     </li>

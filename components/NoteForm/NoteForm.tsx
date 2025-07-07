@@ -1,18 +1,32 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { CategoryType, createNote, NewNoteData } from "@/lib/api";
+import {
+  CategoryType,
+  createNote,
+  getCategories,
+  NewNoteData,
+} from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
 import { useNoteDraftStore } from "@/lib/store/noteStore";
+import { useEffect, useState } from "react";
 
-type Props = {
-  categories: CategoryType[];
-};
+// type Props = {
+//   categories: CategoryType[];
+// };
 
-const NoteForm = ({ categories }: Props) => {
+// { categories }: Props
+
+const NoteForm = () => {
   const router = useRouter();
 
   const { draft, setDraft, clearDraft } = useNoteDraftStore();
+
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+
+  useEffect(() => {
+    getCategories().then((data) => setCategories(data));
+  }, []);
 
   function handleChange(
     event: React.ChangeEvent<

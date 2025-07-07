@@ -1,12 +1,12 @@
 import NoteForm from "@/components/NoteForm/NoteForm";
-import { getCategories } from "@/lib/api";
+// import { getCategories } from "@/lib/api";
 
 const CreateNote = async () => {
-  const categories = await getCategories();
+  // const categories = await getCategories();
 
   return (
     <>
-      <NoteForm categories={categories} />
+      <NoteForm />
     </>
   );
 };

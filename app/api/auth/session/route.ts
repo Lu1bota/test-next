@@ -10,7 +10,7 @@ export async function GET() {
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
   if (accessToken) {
-    return NextResponse.json({ succes: true });
+    return NextResponse.json({ success: true });
   }
 
   if (refreshToken) {
