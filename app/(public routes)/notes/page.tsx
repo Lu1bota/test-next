@@ -1,7 +1,7 @@
 // SSR
 
-import NoteList from '@/components/NoteList/NoteList'
-import { getNotes } from '@/lib/api'
+import NoteList from "@/components/NoteList/NoteList";
+// import { getNotes } from '@/lib/api'
 
 // ISR
 // export const revalidate = 5
@@ -10,17 +10,17 @@ import { getNotes } from '@/lib/api'
 //  /notes/qwebbjsab12312 - details
 
 const Notes = async () => {
-  const notes = await getNotes()
+  // const notes = await getNotes()
   return (
     <div>
       <h1>Notes</h1>
       <br />
-      <NoteList items={notes} />
+      <NoteList />
     </div>
-  )
-}
+  );
+};
 
-export default Notes
+export default Notes;
 
 // 'use client'
 // // CSR
