@@ -4,17 +4,19 @@ import { getNotes, NoteListType } from "@/lib/api";
 import NoteItem from "../NoteItem/NoteItem";
 import { useEffect, useState } from "react";
 
-// type Props = {
-//   items: NoteListType;
-// };
-// { items }: Props
+type NoteListProps = {
+  categoryId?: string;
+  title?: string;
+};
 
-const NoteList = () => {
-  const [items, setitems] = useState<NoteListType | null>(null);
+const NoteList = ({ categoryId, title }: NoteListProps) => {
+  const [items, setItems] = useState<NoteListType | null>(null);
 
   useEffect(() => {
-    getNotes().then((data) => setitems(data));
-  }, []);
+    getNotes(categoryId, title).then((data) => setItems(data));
+  }, [categoryId, title]);
+
+  if (!items) return <div>Loading...</div>;
 
   return (
     <ul>

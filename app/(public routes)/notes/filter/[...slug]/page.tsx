@@ -1,18 +1,18 @@
-import NoteList from '@/components/NoteList/NoteList'
-import SearchBar from '@/components/SearchBar/SearchBar'
-import { getNotes } from '@/lib/api'
+import NoteList from "@/components/NoteList/NoteList";
+import SearchBar from "@/components/SearchBar/SearchBar";
+// import { getNotes } from "@/lib/api";
 
 type Props = {
-  params: Promise<{ slug: string[] }>
-}
+  params: Promise<{ slug: string[] }>;
+};
 
 const NotesPageWithFilters = async ({ params }: Props) => {
-  const { slug } = await params
-  const category = slug[0]
-  const title = slug[1]
-  const queryParams = category === 'all' ? '' : category
+  const { slug } = (await params) || [];
+  const category = slug[0] || "";
+  const title = slug[1] || "";
+  // const queryParams = category === "all" ? "" : category;
 
-  const notes = await getNotes(queryParams, title)
+  // const notes = await getNotes(queryParams, title);
 
   return (
     <div>
@@ -21,9 +21,12 @@ const NotesPageWithFilters = async ({ params }: Props) => {
       <SearchBar categoryId={category} titleValue={title} />
       <br />
       <br />
-      <NoteList items={notes} />
+      <NoteList
+        categoryId={category === "all" ? undefined : category}
+        title={title}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default NotesPageWithFilters
+export default NotesPageWithFilters;
