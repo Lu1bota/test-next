@@ -3,6 +3,7 @@
 import AvatarPicker from "@/components/AvatarPicker/AvatarPicker";
 import { getMe } from "@/lib/api";
 import { updateMe, uploadImage } from "@/lib/api/clientApi";
+import { useRouter } from "next/navigation";
 // import { Metadata } from "next";
 import { useEffect, useState } from "react";
 
@@ -12,6 +13,7 @@ import { useEffect, useState } from "react";
 // };
 
 const ProfileEdit = () => {
+  const router = useRouter();
   const [userName, setUserName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -32,6 +34,7 @@ const ProfileEdit = () => {
     try {
       const newPhotoUrl = imageFile ? await uploadImage(imageFile) : "";
       await updateMe({ userName, photoUrl: newPhotoUrl });
+      router.push("/profile");
     } catch (error) {
       console.error("Oops, some error: ", error);
     }

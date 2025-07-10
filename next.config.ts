@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "ac.goit.global" },
+      { protocol: "https", hostname: "aliiev-lomach.com" },
     ],
   },
   async headers() {

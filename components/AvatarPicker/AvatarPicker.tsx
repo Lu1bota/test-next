@@ -33,6 +33,7 @@ const AvatarPicker = ({ profilePhotoUrl, onChangePhoto }: Props) => {
         setError("Max file size 5MB");
         return;
       }
+      onChangePhoto(file);
 
       const reader = new FileReader();
       reader.onloadend = () => {
